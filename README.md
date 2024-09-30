@@ -60,7 +60,22 @@ This repository is a template for setting up an Azure Machine Learning (Azure ML
      ```
 
 7. **Automate with GitHub Actions**:
-   - Enable GitHub Actions for automated model training and deployment by pushing your changes. Modify the `.yml` file under `.github/workflows/` for scheduling and triggering.
+   - Enable GitHub Actions for automated model training and deployment on push or spesific date-time. Modify the `.yml` file under `.github/workflows/` for scheduling and triggering.
+
+8. **Accessing the Endpoint for Predictions**:
+   - Once the model is deployed, you can access the endpoint for predictions.
+   - In the `testing/` folder, there is a script `test_endpoint.py` that will send requests to your endpoint.
+
+     **Steps to run the test script:**
+     1. Ensure that the endpoint URL is updated in the script:
+        ```python
+        endpoint_url = 'https://<your-endpoint-url>.azurewebsites.net/score'
+        ```
+     2. Run the script using Python:
+        ```bash
+        python testing/test_endpoint.py
+        ```
+     3. If successful, the predictions from your model will be printed.
 
 ---
 
