@@ -60,7 +60,7 @@ This repository is a template for setting up an Azure Machine Learning (Azure ML
      ```
 
 7. **Automate with GitHub Actions**:
-   - Enable GitHub Actions for automated model training and deployment on push or spesific date-time. Modify the `.yml` file under `.github/workflows/` for scheduling and triggering.
+   - Enable GitHub Actions for automated model training and deployment on push or spesific date-time. Modify the `.yml` file under `.github/workflows/` for scheduling and triggering. There are available 3 templates. 
 
 8. **Accessing the Endpoint for Predictions**:
    - Once the model is deployed, you can access the endpoint for predictions.

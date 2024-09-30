@@ -1,9 +1,10 @@
-name: Azure ML continous Training and Deployment
+name: Azure ML Continuous Intergation Continous Delivery with Training on Azure
 
 # on:
-#   schedule:
-#     # Runs every Monday at 9 AM UTC
-#     - cron: '0 9 * * MON'
+#   push:
+#     branches:
+#       - main  # Replace this with your active branch
+
 on:
   push:
     branches:
