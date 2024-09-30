@@ -1,4 +1,7 @@
-{
+{   
+    "subscription_id": "your-subscription-id",
+    "resource_group": "your-resource-group",
+    "workspace_name": "your-workspace-name",
     "model_name": "my_model",          
     "endpoint_name": "my-endpoint",    
     "model_path": "models/model.pkl", 
