@@ -1,27 +1,47 @@
 import joblib
 import numpy as np
-from azureml.core.model import Model
-from azureml.core import Run
+from azure.ai.ml import MLClient
+from azure.ai.ml.entities import Model
+from azure.identity import DefaultAzureCredential
+import json
 import time
+
+# Load configuration
+with open("deployment/config.json") as f:
+    config = json.load(f)
 
 def init():
     global model
-    # Load the registered model
-    model_path = Model.get_model_path('my_model')  # The model name registered in Azure ML
+
+    # Load model from config file
+    credential = DefaultAzureCredential()
+    ml_client = MLClient(credential, config['subscription_id'], config['resource_group'], config['workspace_name'])
+
+    # Get the latest version of the registered model
+    model = ml_client.models.get(name=config['model_name'], version='latest')
+    model_path = model.path
+
+    # Load the model
     model = joblib.load(model_path)
-    # Get the current run context for logging
-    global run
-    run = Run.get_context()
 
 def run(data):
     # Parse input data
     input_data = np.array(data['data'])
-    
+
+    # Start timing for inference
+    start_time = time.time()
+
     # Perform prediction
     result = model.predict(input_data)
 
-    # Example of logging a metric (e.g., the actual prediction)
-    run.log("prediction", result)  # Log custom metric
+    # End timing and log inference time
+    inference_time = time.time() - start_time
+    print(f"Inference time: {inference_time:.4f} seconds")
 
-    # Return the result in a list format
+    # Log prediction (you can log this via a custom method)
+    print(f"Prediction: {result}")
+
+    # Return the result
     return result.tolist()
+
+
