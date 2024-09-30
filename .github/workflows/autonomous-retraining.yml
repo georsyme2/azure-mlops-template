@@ -1,0 +1,40 @@
+name: Azure ML continous Training and Deployment
+
+# on:
+#   schedule:
+#     # Runs every Monday at 9 AM UTC
+#     - cron: '0 9 * * MON'
+on:
+  push:
+    branches:
+      - do-not-run # replace it when ready to use
+
+jobs:
+  train_and_deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.10'
+
+    - name: Install dependencies
+      run: |
+        pip install -r requirements.txt
+
+    - name: Azure login
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+    - name: Run train_azure.py
+      run: |
+        python training/train_azure.py
+
+    - name: Deploy model
+      run: |
+        python deployment/deploy_endpoint.py
