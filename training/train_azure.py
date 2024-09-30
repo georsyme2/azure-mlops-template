@@ -1,4 +1,4 @@
-from azureml.core import Workspace, Dataset, Model
+from azureml.core import Workspace, Dataset, Model, Run
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score
@@ -6,6 +6,9 @@ import joblib
 
 # Connect to your Azure ML Workspace
 ws = Workspace.from_config()
+
+# Get the current run context
+run = Run.get_context()
 
 # Load dataset from Azure (replace with actual dataset name)
 dataset = Dataset.get_by_name(ws, 'your_dataset_name')
@@ -29,6 +32,10 @@ y_pred = model.predict(X_test)
 accuracy = accuracy_score(y_test, y_pred)
 print(f"Model accuracy on Azure: {accuracy * 100:.2f}%")
 
+# Log accuracy to Azure ML
+run.log("accuracy", accuracy)
+print(f"Logged accuracy: {accuracy * 100:.2f}%")
+
 # Save the model to Azure output folder
 model_output = 'outputs/model.pkl'
 joblib.dump(model, model_output)
@@ -36,3 +43,7 @@ joblib.dump(model, model_output)
 # Register the model in Azure ML
 Model.register(workspace=ws, model_name='my_model', model_path=model_output, description='A trained RandomForest model')
 print("Model registered in Azure ML!")
+
+# Complete the run
+run.complete()
+
