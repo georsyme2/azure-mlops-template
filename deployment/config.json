@@ -1,0 +1,10 @@
+{
+    "model_name": "my_model",          
+    "endpoint_name": "my-endpoint",    
+    "model_path": "models/model.pkl", 
+    "compute_instance": "STANDARD_DS2_V2", 
+    "deployment_config": {
+        "cpu_cores": 1,        
+        "memory_gb": 1          
+    }
+}
