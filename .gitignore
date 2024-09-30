@@ -1,0 +1,28 @@
+# Python related
+*.pyc
+__pycache__/
+*.pyo
+*.pyd
+
+# Conda environment
+*.conda
+*.env
+*.venv
+
+# Jupyter notebooks
+.ipynb_checkpoints
+
+# Environment files
+.env
+
+# Azure specific logs and files
+*.log
+*.amlignore
+
+# Model and data files
+*.pkl
+*.h5
+*.model
+
+# Miscellaneous
+.DS_Store
