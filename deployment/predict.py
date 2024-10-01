@@ -5,6 +5,11 @@ from azure.ai.ml.entities import Model
 from azure.identity import DefaultAzureCredential
 import json
 import time
+import logging  # Using Python's logging module for logging
+
+# Set up logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 # Load configuration
 with open("deployment/config.json") as f:
@@ -28,20 +33,16 @@ def run(data):
     # Parse input data
     input_data = np.array(data['data'])
 
-    # Start timing for inference
-    start_time = time.time()
-
     # Perform prediction
     result = model.predict(input_data)
 
-    # End timing and log inference time
-    inference_time = time.time() - start_time
-    print(f"Inference time: {inference_time:.4f} seconds")
 
-    # Log prediction (you can log this via a custom method)
-    print(f"Prediction: {result}")
+    # Log inference time and prediction using the built-in logging
+    logger.info(f"Input Data: {input_data.tolist()}")
+    logger.info(f"Prediction: {result.tolist()}")
 
     # Return the result
     return result.tolist()
+
 
 
